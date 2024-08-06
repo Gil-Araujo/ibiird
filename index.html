@@ -1,0 +1,984 @@
+<!DOCTYPE html>
+<html lang="en">
+<html>
+  <head>
+    <title>Entity-Component - Registry</title>
+    <meta name="description" content="Entity-Component - Registry">
+    <script src="https://aframe.io/releases/1.6.0/aframe.min.js"></script>
+    <script src="https://unpkg.com/aframe-event-set-component@5.0.0/dist/aframe-event-set-component.min.js"></script>
+
+   <!-- <script>
+      var bouncing = false;
+      document.addEventListener('click', function () {
+        bouncing = !bouncing;
+        var el = document.querySelector('#ball');
+        el.emit(bouncing ? 'bounce-start' : 'bounce-stop');
+      });
+    </script>-->
+
+  </head>
+  <body>
+    <a-scene>
+
+       <!--ceu
+      <a-sphere id="ball" material="color: #39f436" position="0 5 -5">
+        <a-animation
+          attribute="position"
+          from="0 5 -5"
+          to="0 3 -5"
+          dur="500"
+          begin="bounce-start"
+          end="bounce-stop"
+          fill="backwards"
+          easing="ease-in"
+          repeat="indefinite"
+        ></a-animation>
+      </a-sphere>-->
+      
+        <a-assets>
+       <!--ceu-->
+        <img id="sky" src="/images/lasillanttfisheye-cc-eq-extended.jpg">
+       
+          <!--cabecalho project-->
+        <a-asset-item id= "project" src="\assets\asset 2.gltf"></a-asset-item>
+         
+
+         <a-asset-item id= "project_icon" src="\assets\asset 6.gltf"></a-asset-item>
+     
+
+    <!--cabecalho ULSSA-->
+        <a-asset-item id= "ULSSA" src="\assets\asset 3.gltf"></a-asset-item>
+          </a-assets>
+          <a-asset-item id= "ULSSA_icon" src="\assets\asset 4.gltf"></a-asset-item>
+        
+
+        <!--cabecalho Methodology-->
+        <a-asset-item id= "method" src="\assets\asset 8.gltf"></a-asset-item>
+      
+
+        <a-asset-item id= "method_icon" src="\assets\asset 7.gltf"></a-asset-item>
+          
+
+        <a-asset-item id= "modules_text" src="\assets\modules_text.gltf"></a-asset-item>
+           
+
+        <a-asset-item id= "modules_icon" src="\assets\Modules.gltf"></a-asset-item>
+       
+
+        <a-asset-item id= "collaborator_icon" src="\assets\collaborator.gltf"></a-asset-item>
+     
+       <a-asset-item id= "vr_icon" src="\assets\vr.gltf"></a-asset-item>
+    
+
+      <a-asset-item id= "agendamento_icon" src="\assets\agendamento.gltf"></a-asset-item>
+   
+
+      <a-asset-item id= "robot_icon" src="\assets\robot.gltf"></a-asset-item>
+    
+
+      <a-asset-item id= "telemovel_icon" src="\assets\telemovel.gltf"></a-asset-item>
+ 
+
+      <a-asset-item id= "cloud_icon" src="\assets\cloud.gltf"></a-asset-item>
+
+
+     <a-asset-item id= "impact" src="\assets\impact.gltf"></a-asset-item>
+
+
+     <a-asset-item id= "impacto" src="\assets\impacto.gltf"></a-asset-item>
+   
+
+     <a-asset-item id= "seta" src="\assets\seta.gltf"></a-asset-item>
+ 
+
+    <a-asset-item id= "ibird" src="\assets\ibird.gltf"></a-asset-item>
+
+    <a-asset-item id= "passaro" src="\assets\passaro.gltf"></a-asset-item>
+
+    <a-asset-item id= "ibirdletras" src="\assets\iBirdLetras.gltf"></a-asset-item>
+ 
+
+  </a-assets>
+
+   <!--logo_gigante-->
+
+  <a-entity
+  position="0 6 60" id="fig1"  scale="300 300 130" gltf-model="#passaro" rotation="0 0 0" animation="property: rotation; to: 0 360 0; loop: true; dur: 10000 "
+  >
+  </a-entity>
+    
+   <!--logo_gigante-->
+
+  <a-sky src="#sky" material="side: double; color:#202e38; transparent: true; opacity: 0.98;" ></a-sky>
+
+   <!--chão-->
+        <a-plane id="chao" material="color:#07080a; transparent: true; opacity: 1;" 
+          rotation="-90 0 0"
+          scale="10000 10000 1"
+          shader="flat">       
+        </a-plane>
+
+      </a-assets>
+
+      <!--som-->
+      <a-sound src="\sound\som.mp3" autoplay="true" position="0 15 0" volume="1" ></a-sound>
+   
+   <!--luz-->
+
+<!--ambient light-->
+   <a-entity light="type:ambient; color:#BBB; intensity:10; "  position="0 5.590 0"    ></a-entity>
+
+<!--directional light
+<a-entity light="type:directional; color:#FFFFFF; intensity:7; castShadow:true;" position= "-0.5 1 1"></a-entity>-->
+
+
+<!--spot light painel central
+
+<a-entity id="luz_total"  light="type:spot; color:#FFFFFF; target:#p_central;  intensity:1; penumbra:0.5; angle:25.230; castShadow:true;" position= "-0.734 2.637 9.279"></a-entity>-->
+
+<!--spot light painel central
+
+<a-entity  id="luz_esquerdo"   light="type:spot; color:#FFFFFF; target:#p_esquerdo;  intensity:10; penumbra:0.5; angle:40; castShadow:true;" position= "0 6 0"></a-entity>
+
+<a-entity id="luz_direito"    light="type:spot; color:#FFFFFF; target:#p_direito;  intensity:1.1; penumbra:0.5; angle:40; castShadow:true;" position= "0 6 0"></a-entity>
+
+<a-entity id="luz_central"  light="type:spot; color:#FFFFFF; target:#fig1;  intensity:0.7; penumbra:0.5; angle:40; castShadow:true;" position= "0 8 0"></a-entity>
+
+<a-entity id="luz_central"  light="type:point; color:#FFFFFF; target:#ibird;  intensity:0.7; penumbra:0.5; angle:40; castShadow:true;" position= "0 8 0"></a-entity>
+-->
+    <!--camera-->
+        
+            <a-camera user-height="1.6" acttive="true" >
+ <a-entity cursor position="0 0 -1" 
+           geometry="primitive:sphere; radius:0.005"
+           material="color:white; shader:flat; opacity:0.8 " >
+  </a-entity>
+            </a-camera>
+       
+
+
+
+
+<!--wrapper-->
+        <a-entity position="0 0 0" >
+      
+
+ <!--Painel Central-->
+
+  <a-entity  id="p_central"; position="0 0 -2.5" rotation="0 0 0" geometry="primitive: plane; width:8; height:8; " material="side: double; color:#070c0f; transparent: true; opacity: 0;">
+
+ <!--003-->
+              <a-entity
+              id="p_central_3"
+              position="1.6 1.7 0"
+              geometry="primitive: plane; width:1.5; height:2; " material="side: double; color:#07080a; transparent: true; opacity: 0.5;"
+              material="color: #333333"
+              scale="1 1 1" 
+              text="width:1.3; color: white; anchor: center; font: roboto; lineHeight: 60px;
+                    value: The iBird project employs a multidisciplinary approach. Methodology involved stakeholder engagement, comprehensive data collection, and iterative development phases to ensure the solutions met clinical needs. A multidisciplinary Think Tank, comprising technological partners, administration, clinical services, and IT, played a pivotal role in its strategy development. Stakeholder engagement involved an anonymous online questionnaire and focus group discussions, garnering insights from diverse perspectives. Data analysis focused on measuring the impact of these technologies on surgical outcomes, patient safety, and educational benefits, utilizing feedback from healthcare professionals, patients, and students to guide continuous improvement. This qualitative and quantitative analysis also considered sustainability, digital transformation, and innovation in the Portuguese healthcare landscape.
+                    \n
+                    
+                    "
+            >
+          </a-entity>
+<!--002-->
+          <a-entity
+          id="p_central_2"
+          position="0 1.7 0"
+          geometry="primitive: plane; width:1.5; height:2;" material="side: double; color:#07080a; transparent: true; opacity: 0.5"
+          material="color: #333333"
+          scale="1 1 1" 
+          text="width:1.3; color: white; anchor: center; font: roboto; lineHeight: 60px;
+                value: The iBird project aims to revolutionize the healthcare experience by implementing an integrated technological ecosystem that enhances surgical precision, reduces patient recovery times, and fosters a learning environment for healthcare professionals and students. Through the adoption of cutting-edge technologies such as AI, big data, robotics, augmented and virtual reality, the project seeks to improve operational efficiencies, minimize surgical risks, and promote patient engagement and education. By utilizing a cloud-based architecture a multimedia interface platform that will employ a user-based collaborative filtering algorithm to analyze historical interactions and user data gathered from its initial six modules, enabling personalized recommendations and information that match the unique preferences and needs of each individual. This approach aims to ensure coordination, collaboration, and synergy between physicians, patients, and research activities within an integrated ecosystem.
+                
+                
+                "
+                >
+          </a-entity>
+
+<!--001-->
+
+          <a-entity id="p_central_1"
+          position="-1.6 1.7 0"
+          geometry="primitive: plane; width:1.5; height:2;" material="side: double; color:#07080a; transparent: true; opacity: 0.5"
+          material="color: #333333"
+          scale="1 1 1" 
+          text="width:1.3; color: white; font: roboto; anchor: center; lineHeight: 60px;
+                value: Unidade Local de Saude de Santo Antonio is one of the biggest Portuguese Hospital Centers, it is situated in the northern region of Portugal. ULS Santo António serving a estimated population of three million people, stands at the forefront of integrating technology and healthcare, serving as a beacon of innovation in Portugal. With a focus on patient-centered care, ULS Santo António leverages advanced digital and robotic technologies to enhance surgical outcomes and healthcare delivery. Emphasizing sustainability, education, and research, being as well a university hospital, it fosters a collaborative environment where healthcare professionals and academics work together to push the boundaries of medical science, ensuring the highest standards of care and operational excellence.
+                \n
+                \n
+                \n
+                "
+          >
+          </a-entity>
+
+<!--linha_cabecalho-->
+
+          <a-entity id="ibird" position="0 4.5 -1" scale="1.8 1.8 1" >
+            <a-entity position="-0.8 0 0" gltf-model="#passaro" scale="9 9 1" >
+            </a-entity>
+            <a-entity position="0 0 0" gltf-model="#ibirdletras" scale="5 5 1" >
+            </a-entity>
+          </a-entity>
+         
+        
+
+
+
+<!--linha_001-->
+          <a-entity position="-1.7 2.95 0" gltf-model="#ULSSA" scale="5 5 1" >
+          </a-entity>
+          
+          <a-entity position="-2.2 2.99 0" gltf-model="#ULSSA_icon" scale="1 1 .5" material="side: double; color:#07080a; transparent: true; opacity: 0.5;">
+          </a-entity>
+          
+          <a-entity
+          position="-1.6 2.8 0"
+          geometry="primitive: plane; width:1.5; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+          >
+          </a-entity>
+
+
+<!--linha_002-->
+         <a-entity position="-0.12 2.94 0" gltf-model="#project" scale="5.3 5.3 1" >
+        </a-entity>
+
+        <a-entity position="-0.68 2.97 0" gltf-model="#project_icon" scale="1.3 1.3 1" >
+        </a-entity>
+
+          <a-entity
+          position="0 2.8 0"
+          geometry="primitive: plane; width:1.5; height:0.013;" material="side: double; color:#ffffff; shader: standard;"
+          >
+        
+          </a-entity>
+
+<!--linha_003-->
+          <a-entity position="1.7 2.92 0" gltf-model="#method" scale="7 7 1" >
+          </a-entity>
+
+          <a-entity position="0.91 2.97 0" gltf-model="#method_icon" scale="0.95 0.95 1" >
+          </a-entity>
+
+            <a-entity
+            position="1.6 2.8 0"
+            geometry="primitive: plane; width:1.5; height:0.013;" material="side: double; color:#ffffff; shader: standard;"
+            >
+
+            </a-entity>
+
+
+
+          
+  </a-entity>
+
+<!--Fim_painel_1-->
+
+<!--Painel direito-->
+  
+  <a-entity  id="p_direito"  position="3 -0.3 1" rotation=" 0 -90 0" geometry="primitive: plane; width:8; height:8; " material="side: double; color:#070c0f; transparent: true; opacity: 0;">
+
+
+          <!--Bloco_001-->
+
+         <!-- event-set__mouseenter="scale: 2 2 2"-->
+
+          <a-entity id="painel" position="-1.65 2.36 0"
+          event-set__mouseenter="position: -1.65 2.36 0.15"
+          event-set__mouseleave="position: -1.65 2.36 0"
+          >
+          
+            <!--animacao
+         <a-animation
+         
+         attribute="position"
+         from="-1.65 2.36 0"
+         to="-1.65 2.36 2"
+         dur="1"
+         begin="scale_start"
+         end="scale_end"
+         fill="backwards"
+         easing="ease-in"
+         repeat="indefinite"
+
+         ></a-animation>-->
+
+        <!-- event-set__mouseenter="material.color: #22252b"
+         event-set__mouseleave="material.color: #07080a"-->
+
+
+          <a-plane id="painel" position="0.06  0.245 -0.01"  color="green" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #07080a; transparent: true; opacity: 1;"
+          >
+
+
+
+          
+          </a-plane>
+          <a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+          >
+          </a-plane>
+
+
+
+          <a-entity position="-0.55 0.57 0" gltf-model="#collaborator_icon" scale="1.3 1.3 .5" >
+          </a-entity>
+
+          <a-entity 
+          position="0.86 0.62 0"
+          scale="1 1 1"         
+          text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:50px;
+              value: Collaborator
+              "
+               >
+        </a-entity>
+
+        <a-entity
+           
+        position="0.17 0.47 0"
+
+        scale="1 1 1"         
+        text="width:1; color: white; font: roboto; anchor:center; lineHeight:50px;
+            value: Surgery Extended Reality System
+            Audiovisual
+            Multimedia
+            "
+        >
+      </a-entity>
+
+        <a-entity 
+     
+          position="0.37 0.12 0"
+          
+          material="color: #333333"
+          scale="1 1 1" 
+          text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+              value: Surgery livestream
+              Remote surgery collaboration
+              More research content                 
+              OR Digitalization
+              Data visualitation 
+              Surgical precision
+              "
+          >
+        </a-entity>
+
+        <a-entity
+        position="-0.555 0.23 0.01" rotation="0 0 90"
+        geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+          >
+      </a-entity>
+
+      <a-entity 
+     
+      position="0.85 -0.05 0"
+      material="color: #333333"
+      scale="1 1 1" 
+      text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+          value: 01
+          "
+      >
+    </a-entity>
+
+    </a-entity>
+
+     <!--fim_bloco_1-->
+
+      <!--Bloco_002-->
+
+          <a-entity position="-0.05 2.36 0"
+          event-set__mouseenter="position: -0.05 2.36 0.15"
+          event-set__mouseleave="position: -0.05 2.36 0" >
+   
+          <a-plane position="0.06  0.245 -0.01" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #07080a; transparent: true; opacity: 1;"
+          >
+          </a-plane>
+          <a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+          >
+          </a-plane>
+
+
+
+          <a-entity position="-0.55 0.57 0" gltf-model="#vr_icon" scale="1.9 1.9 .5" >
+          </a-entity>
+
+          <a-entity 
+          position="0.86 0.61 0"
+          scale="1 1 1"         
+          text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:50px;
+              value: AR/VR/RM/5G
+              "
+               >
+        </a-entity>
+
+        <a-entity
+           
+        position="0.17 0.52 0"
+
+        scale="1 1 1"         
+        text="width:1; color: white; font: roboto; anchor:center; lineHeight:50px;
+            value: Operating room system
+            "
+        >
+      </a-entity>
+
+        <a-entity 
+     
+          position="0.37 0.12 0"
+          
+          material="color: #333333"
+          scale="1 1 1" 
+          text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+              value: Simulation-Based Learning 
+              Clinical data overlay 
+              Remote student classes                 
+              Remote surgery collaboration
+              Less OR traffic
+              Less Hosptal Visits
+              "
+          >
+        </a-entity>
+
+        <a-entity
+        position="-0.555 0.23 0.01" rotation="0 0 90"
+        geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+          >
+      </a-entity>
+
+      <a-entity 
+     
+      position="0.85 -0.05 0"
+      material="color: #333333"
+      scale="1 1 1" 
+      text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+          value: 02
+          "
+      >
+    </a-entity>
+
+    </a-entity>
+
+     <!--fim_bloco_2-->
+
+         
+<!--Bloco_003-->
+
+<a-entity position="1.54 2.36 0"
+event-set__mouseenter="position: 1.54 2.36 0.15"
+event-set__mouseleave="position: 1.54 2.36 0" >
+
+<a-plane position="0.06  0.245 -0.01" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #070c0f; transparent: true; opacity: 1;"
+>
+</a-plane>
+<a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+>
+</a-plane>
+
+
+
+<a-entity position="-0.55 0.57 0" gltf-model="#agendamento_icon" scale="1 1 .5" >
+</a-entity>
+
+<a-entity 
+position="0.86 0.57 0"
+scale="1 1 1"         
+text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:44px;
+    value: Adaptive Business 
+    Intelligence
+    "
+     >
+</a-entity>
+
+<a-entity
+ 
+position="0.17 0.416 0"
+
+scale="1 1 1"         
+text="width:1; color: white; font: roboto; anchor:center; lineHeight:50px;
+  value: 
+ 
+  AI-Enhanced Surgical Scheduling
+  "
+>
+</a-entity>
+
+<a-entity 
+
+position="0.37 0.12 0"
+
+material="color: #333333"
+scale="1 1 1" 
+text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+    value: ML predictive models 
+    Estmated surgery duration 
+    Clinical history analisys              
+    Initial scenario simulation 
+    Automatic schedulling
+    Decision making support dashboards
+    "
+>
+</a-entity>
+
+<a-entity
+position="-0.555 0.23 0.01" rotation="0 0 90"
+geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+>
+</a-entity>
+
+<a-entity 
+
+position="0.85 -0.05 0"
+material="color: #333333"
+scale="1 1 1" 
+text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+value: 03
+"
+>
+</a-entity>
+
+</a-entity>
+
+<!--fim_bloco_3-->
+
+<!--Bloco_004-->
+
+<a-entity position="-1.65 1.3 0"
+event-set__mouseenter="position: -1.65 1.3 0.15"
+event-set__mouseleave="position: -1.65 1.3 0" >
+
+<a-plane position="0.06  0.245 -0.01" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #070c0f; transparent: true; opacity: 1;"
+>
+</a-plane>
+<a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+>
+</a-plane>
+
+
+
+<a-entity position="-0.55 0.57 0" gltf-model="#robot_icon" scale="1.3 1.3 .5" >
+</a-entity>
+
+<a-entity 
+position="0.86 0.57 0"
+scale="1 1 1"         
+text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:45px;
+    value: Robotic Programs 
+    HUGO & ROSA
+    "
+     >
+</a-entity>
+
+
+
+<a-entity 
+position="0.37 0.12 0"
+material="color: #333333"
+scale="1 1 1" 
+text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+    value: Less invasive
+    Improved surgical precision
+    Intraoperaitve decision-making                  
+    Less postoperatvive 
+    Reduced hospital stay
+    \n
+    "
+>
+</a-entity>
+
+<a-entity
+position="-0.555 0.23 0.01" rotation="0 0 90"
+geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+>
+</a-entity>
+
+<a-entity 
+position="0.85 -0.05 0"
+material="color: #333333"
+scale="1 1 1" 
+text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+value: 04
+"
+>
+</a-entity>
+
+</a-entity>
+
+<!--fim_bloco_4-->
+
+<!--Bloco_005-->
+
+<a-entity position="-0.05 1.3 0"
+event-set__mouseenter="position: -0.05 1.3 0.15"
+event-set__mouseleave="position: -0.05 1.3 0">
+
+<a-plane position="0.06  0.245 -0.01" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #070c0f; transparent: true; opacity: 1;"
+>
+</a-plane>
+<a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+>
+</a-plane>
+
+
+
+<a-entity position="-0.55 0.57 0" gltf-model="#telemovel_icon" scale="1.3 1.3 .5" >
+</a-entity>
+
+<a-entity 
+position="0.86 0.57 0"
+scale="1 1 1"         
+text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:45px;
+    value: Get Ready APP
+    IoT / AI
+    "
+     >
+</a-entity>
+
+<a-entity 
+
+position="0.37 0.12 0"
+
+material="color: #333333"
+scale="1 1 1" 
+text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+    value: Symptoms patient recording
+    Patient reported Outcome Measures
+    Open communication channel               
+    Telemonitoring 
+    Reduced hospital stays 
+    Less hospital travels 
+    "
+>
+</a-entity>
+
+<a-entity
+position="-0.555 0.23 0.01" rotation="0 0 90"
+geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+>
+</a-entity>
+
+<a-entity 
+
+position="0.85 -0.05 0"
+material="color: #333333"
+scale="1 1 1" 
+text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+value: 05
+"
+>
+</a-entity>
+
+</a-entity>
+
+<!--fim_bloco_5-->
+
+
+<!--Bloco_006-->
+
+<a-entity position="1.54 1.3 0"
+event-set__mouseenter="position: 1.54 1.3 0.15"
+event-set__mouseleave="position: 1.54 1.3 0">
+
+<a-plane position="0.06  0.245 -0.01" geometry="primitive: plane; width:1.55; height:1.01;" material="side: double; color: #070c0f; transparent: true; opacity: 1;"
+>
+</a-plane>
+<a-plane position="-0.56  0.24 0" geometry="primitive: plane; width:0.3; height:1;" material="side: double; color:#00d0ff; transparent: true; opacity: 1;"
+>
+</a-plane>
+
+
+
+<a-entity position="-0.55 0.57 0" gltf-model="#cloud_icon" scale="1.2 1.2 0.5" >
+</a-entity>
+
+<a-entity 
+position="0.86 0.57 0"
+scale="1 1 1"         
+text="width:2.4; color: white; font: roboto; anchor:center; lineHeight:45px;
+value:Patient Care
+IoT/ BIG DATA
+"
+>
+</a-entity>
+
+
+<a-entity 
+
+position="0.37 0.12 0"
+
+material="color: #333333"
+scale="1 1 1" 
+text="width:1.4; color: white; font: roboto; anchor:center; lineHeight:52px;
+value: Medical records integration
+Real time vital signs
+Medical devices autmated management                
+IoT  devices and BigData interoperabilty
+Real time patient tracking information 
+Decision-making dashboards 
+"
+>
+</a-entity>
+
+<a-entity
+position="-0.555 0.23 0.01" rotation="0 0 90"
+geometry="primitive: plane; width:0.35; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+>
+</a-entity>
+
+<a-entity 
+
+position="0.85 -0.05 0"
+material="color: #333333"
+scale="1 1 1" 
+text="width:3; color: white; font: roboto; anchor:center; lineHeight:52px;
+value: 06
+"
+>
+</a-entity>
+
+</a-entity>
+
+<!--fim_bloco_6-->
+
+
+          <!--linha_suoerior-->
+              <a-entity shadow="cast:true"  position="-2.51 2.6 0" gltf-model="#modules_text" scale="6 6 1" rotation=" 0 0 90" >
+              </a-entity>
+
+              <a-entity shadow="cast:true"  position="-2.2 3.31 0" gltf-model="#modules_icon" scale="1.3 1.3 .5" >
+              </a-entity>
+
+              <a-entity
+                position=" 0 3.17 0"
+                geometry="primitive: plane; width:4.72; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+                  >
+              </a-entity>
+          
+</a-entity>
+
+<!--Fim_direito-->
+
+
+<!--painel_esquerdo-->
+
+<a-entity id="p_esquerdo"  position="-3 -0.3 0" rotation=" 0 90 0" geometry="primitive: plane; width:8; height:8; " material="side: double; color:#070c0f; transparent: true; opacity: 0;">
+
+  <!--painel_001-->
+
+  <a-entity position="0.6 1.9 0"
+  >
+
+  <a-plane position="0 0.1 0" geometry="primitive: plane; width:3.5; height:2.2;" material="side: double; color: #070c0f; transparent: true; opacity: 0.5; roughness:0.2; shader: standard;"
+  >
+  </a-plane>
+
+<a-entity position=".6 0.6 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.15" height="0.05" material="color:yellow; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: yellow"></a-cylinder>
+<a-text value="Digital 
+transformation" width="1.2" position=" 0.25 0 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position=".41 0.30 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.15" height="0.05" material="color:cyan; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: cyan"></a-cylinder>
+<a-text value="Waste reduction" width="1.2" position=" 0.225 0.065 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position=".65 0.14 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.125" height="0.05" material="color:yellow; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: yellow"></a-cylinder>
+<a-text value="Well being" width="1.2" position=" 0.16 -0.03 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position=".7 -0.165 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.18" height="0.05" material="color:cyan  ; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: cyan"></a-cylinder>
+<a-text value="Development
+and talention
+retention" width="1.2" position=" 0.16 -0.2 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position="-0.5 -0.2 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.09" height="0.05" material="color:cyan; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: cyan"></a-cylinder>
+<a-text value="Financial 
+and ambiental
+sustainability" width="1.2" position=" 0.16 0 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position="-0.2 0.5 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.09" height="0.05" material="color:cyan; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: cyan" ></a-cylinder>
+<a-text value="Research
+and inovation" width="1.2" position=" 0.14 0 0 " >
+</a-text>   
+</a-entity>
+
+<a-entity position="-0.45 0.03 0.09">
+  <a-cylinder shadow="cast:true" side="double" rotation="90 0 0" position="0 0 0" radius="0.09" height="0.05" material="color:yellow; roughness:0.2; shader: standard;"
+  event-set__mouseenter="material.color: white"
+  event-set__mouseleave="material.color: yellow"></a-cylinder>
+<a-text value="Patient 
+safety" width="1.2" position=" 0.14 0 0 " >
+</a-text>   
+</a-entity>
+
+<!--numeracao_horizontal-->
+
+<a-entity position="-0.2 -.86 0.09">
+ 
+  <a-text value="3.5" width="1.2" position=" -1.1 0.08 0 " >
+  </a-text> 
+
+<a-text value="4.0" width="1.2" position=" 0.14 0.08 0 " >
+</a-text>   
+
+<a-text value="4.5" width="1.2" position=" 1.4 0.08 0 " >
+</a-text>   
+
+<a-text value="Impact on ULSSA" width="1.2" position="0 -0.01 0 " >
+</a-text>   
+
+</a-entity>
+
+<!--numeracao_vertical-->
+
+<a-entity position="-4.2 -.7 0.09" rotation="0 0 0">
+ 
+  <a-text value="3.5" width="1.2" position=" 2.7 0.1 0 " >
+  </a-text>   
+
+  <a-text value="4.0" width="1.2" position=" 2.7 0.7 0 " >
+  </a-text>   
+
+  <a-text value="4.5" width="1.2" position=" 2.7 1.2 0 " >
+  </a-text>   
+
+  <a-text value="5.0" width="1.2" position=" 2.7 1.7 0 " >
+  </a-text>  
+
+<a-text value="Social impact" width="1.2" position="2.6 0.6 0 "  rotation="0 0 90">
+</a-text>   
+
+</a-entity>
+
+</a-entity>
+
+
+<!--linha_suoerior-->
+<a-entity shadow="cast:true"  position="1.9 3.37 0" gltf-model="#impact" scale="4 4 1" rotation="0 0 0" >
+</a-entity>
+
+<a-entity shadow="cast:true"  position="1.2 3.40 0" gltf-model="#impacto" scale="1.6 1.6 .1" >
+</a-entity>
+
+
+<a-entity
+  position=" -0.55 3.22 0"
+  geometry="primitive: plane; width:5.8; height:0.013;" material="side: double; color:#ffffff; shader:standard;"
+    >
+</a-entity>
+
+<!--fim_painel_001-->
+
+<!--painel_002-->
+<a-entity
+ position="-2.36 2 0"
+  geometry="primitive: plane; width:2.25; height:2.2;" material="side: double; color:#070c0f; shader:standard; transparent: true; opacity: 0.5;"
+  event-set__mouseenter="position: -2.36 2 0.15"
+  event-set__mouseleave="position: -2.36 2 0">
+
+<!--texto-->
+<a-entity position="-0.4 0.36 0">
+
+  <a-entity position="-0.5 0.27 0">
+    <a-text value="Results" width="4.2" position="0.35 -0.03 0 "  rotation="0 0 0">
+    </a-text> 
+      <a-entity shadow="cast:true"  position="0.20 0 0" gltf-model="#impacto" scale="1.4 1.4 .1" >
+      </a-entity>
+    
+    </a-entity>
+
+
+<a-entity position="-0.3 0 0">
+<a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+</a-entity>
+<a-text value="80% student satisfaction" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+</a-text> 
+</a-entity>
+
+
+<a-entity position="-0.3 -0.16 0">
+  <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+  </a-entity>
+  <a-text value="1 day reduction hospital stays" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+  </a-text> 
+</a-entity>
+
+  <a-entity position="-0.3 -0.32 0">
+    <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+    </a-entity>
+    <a-text value="40% reduction total hospital stays" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+    </a-text> 
+  </a-entity>
+
+  <a-entity position="-0.3 -0.485 0">
+    <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+    </a-entity>
+    <a-text value="40% reduction paper usage" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+    </a-text> 
+  </a-entity>
+
+  <a-entity position="-0.3 -0.65 0">
+    <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+    </a-entity>
+    <a-text value="More surgical precision" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+    </a-text> 
+  </a-entity>
+
+  <a-entity position="-0.3 -0.82 0">
+    <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+    </a-entity>
+    <a-text value="50% hospital visits decrease" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+    </a-text> 
+  </a-entity>
+
+  <a-entity position="-0.3 -0.98 0">
+    <a-entity position="0 0 0" gltf-model="#seta" scale="2 2 1" rotation=" 0 0 0" >
+    </a-entity>
+    <a-text value="80% increased OR productivity" width="2.2" position="0.15 0 0 "  rotation="0 0 0">
+    </a-text> 
+  </a-entity>
+
+
+</a-entity>
+<!-- Fim_texto-->
+
+
+</a-entity>
+<!--fim_painel_002-->
+
+</a-entity>
+<!--fim_painel_esquerdo-->
+
+
+
+
+</a-entity>
+<!--fim_wrapper-->
+
+
+    </a-scene>
+  
+  </body>
+</html>
